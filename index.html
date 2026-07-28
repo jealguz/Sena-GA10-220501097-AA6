@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plataforma interactiva educativa sobre Infraestructura de Servidores, Virtualizacion, Contenedores y DevOps">
+  <meta name="keywords" content="DevOps, servidores, virtualizacion, Docker, contenedores, nube, CI/CD">
+  <title>Infraestructura Tech | Servidores, Virtualizacion, Contenedores & DevOps</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===================== BARRA DE NAVEGACION ===================== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <span class="brand-icon">&#9881;</span>
+      <span class="brand-text">InfraTech<span class="brand-dot">.</span></span>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu de navegacion">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a></li>
+      <li><a href="#virtualizacion" class="nav-link" data-section="virtualizacion">Virtualizacion</a></li>
+      <li><a href="#entorno-local" class="nav-link" data-section="entorno-local">Entorno Local</a></li>
+      <li><a href="#pipeline" class="nav-link" data-section="pipeline">Pipeline CI/CD</a></li>
+      <li><a href="#consola" class="nav-link" data-section="consola">Consola</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===================== HERO / DASHBOARD PRINCIPAL ===================== -->
+  <section class="hero" id="dashboard">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Plataforma Educativa DevOps</div>
+      <h1 class="hero-title">
+        Infraestructura de<br>
+        <span class="hero-highlight">Servidores &amp; Nube</span>
+      </h1>
+      <p class="hero-subtitle">
+        Explora de forma interactiva la arquitectura moderna de servidores,
+        virtualizacion, contenedores y despliegue continuo en la nube.
+      </p>
+      <a href="#virtualizacion" class="hero-cta">
+        Comenzar Exploracion
+        <span class="cta-arrow">&rarr;</span>
+      </a>
+    </div>
+
+    <!-- Panel de Metricas del Dashboard -->
+    <div class="dashboard-panel">
+      <div class="panel-header">
+        <div class="panel-title-bar">
+          <span class="panel-dot red"></span>
+          <span class="panel-dot yellow"></span>
+          <span class="panel-dot green"></span>
+          <span class="panel-title-text">server-monitor ~ Dashboard de Metricas en Tiempo Real</span>
+        </div>
+        <span class="panel-status" id="panelStatus">
+          <span class="status-pulse"></span> EN LINEA
+        </span>
+      </div>
+
+      <div class="metrics-grid">
+        <!-- CPU -->
+        <div class="metric-card" id="cpuCard">
+          <div class="metric-icon cpu-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>
+              <line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/>
+              <line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/>
+              <line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/>
+              <line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">CPU</span>
+            <span class="metric-value" id="cpuValue">0%</span>
+          </div>
+          <div class="metric-bar">
+            <div class="metric-bar-fill cpu-bar" id="cpuBar" style="width:0%"></div>
+          </div>
+          <div class="metric-detail">
+            <span class="detail-label">Nucleos: 8</span>
+            <span class="detail-label">Frecuencia: 3.6 GHz</span>
+          </div>
+        </div>
+
+        <!-- RAM -->
+        <div class="metric-card" id="ramCard">
+          <div class="metric-icon ram-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="6" width="20" height="12" rx="2"/>
+              <line x1="6" y1="10" x2="6" y2="14"/><line x1="10" y1="10" x2="10" y2="14"/>
+              <line x1="14" y1="10" x2="14" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">RAM</span>
+            <span class="metric-value" id="ramValue">0%</span>
+          </div>
+          <div class="metric-bar">
+            <div class="metric-bar-fill ram-bar" id="ramBar" style="width:0%"></div>
+          </div>
+          <div class="metric-detail">
+            <span class="detail-label">Usado: 0 GB</span>
+            <span class="detail-label">Total: 16 GB</span>
+          </div>
+        </div>
+
+        <!-- Red -->
+        <div class="metric-card" id="networkCard">
+          <div class="metric-icon network-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Red</span>
+            <span class="metric-value" id="networkValue">0 Mbps</span>
+          </div>
+          <div class="metric-bar">
+            <div class="metric-bar-fill network-bar" id="networkBar" style="width:0%"></div>
+          </div>
+          <div class="metric-detail">
+            <span class="detail-label">Entrada: 0 MB/s</span>
+            <span class="detail-label">Salida: 0 MB/s</span>
+          </div>
+        </div>
+
+        <!-- Disco -->
+        <div class="metric-card" id="diskCard">
+          <div class="metric-icon disk-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Disco</span>
+            <span class="metric-value" id="diskValue">0%</span>
+          </div>
+          <div class="metric-bar">
+            <div class="metric-bar-fill disk-bar" id="diskBar" style="width:0%"></div>
+          </div>
+          <div class="metric-detail">
+            <span class="detail-label">Usado: 0 GB</span>
+            <span class="detail-label">Total: 512 GB SSD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estado de Puertos y Servicios -->
+      <div class="services-grid">
+        <h3 class="services-title">Estado de Servicios y Puertos</h3>
+        <div class="ports-row" id="portsRow">
+          <div class="port-chip" data-port="80">
+            <span class="port-status-dot active"></span>
+            <span class="port-num">:80</span>
+            <span class="port-svc">Apache HTTP</span>
+          </div>
+          <div class="port-chip" data-port="8080">
+            <span class="port-status-dot active"></span>
+            <span class="port-num">:8080</span>
+            <span class="port-svc">Tomcat</span>
+          </div>
+          <div class="port-chip" data-port="3306">
+            <span class="port-status-dot active"></span>
+            <span class="port-num">:3306</span>
+            <span class="port-svc">MySQL</span>
+          </div>
+          <div class="port-chip" data-port="5432">
+            <span class="port-status-dot inactive"></span>
+            <span class="port-num">:5432</span>
+            <span class="port-svc">PostgreSQL</span>
+          </div>
+          <div class="port-chip" data-port="22">
+            <span class="port-status-dot active"></span>
+            <span class="port-num">:22</span>
+            <span class="port-svc">SSH</span>
+          </div>
+          <div class="port-chip" data-port="443">
+            <span class="port-status-dot active"></span>
+            <span class="port-num">:443</span>
+            <span class="port-svc">HTTPS/TLS</span>
+          </div>
+        </div>
+        <div class="services-row" id="servicesRow">
+          <div class="service-indicator running" data-service="apache">
+            <span class="svc-icon">&#9654;</span>
+            <span class="svc-name">Apache Tomcat</span>
+            <span class="svc-badge running">Activo</span>
+          </div>
+          <div class="service-indicator running" data-service="mysql">
+            <span class="svc-icon">&#9654;</span>
+            <span class="svc-name">MySQL 8.0</span>
+            <span class="svc-badge running">Activo</span>
+          </div>
+          <div class="service-indicator stopped" data-service="postgres">
+            <span class="svc-icon">&#9632;</span>
+            <span class="svc-name">PostgreSQL 15</span>
+            <span class="svc-badge stopped">Detenido</span>
+          </div>
+          <div class="service-indicator running" data-service="nginx">
+            <span class="svc-icon">&#9654;</span>
+            <span class="svc-name">Nginx</span>
+            <span class="svc-badge running">Activo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MODULO 1: VIRTUALIZACION VS CONTENEDORES ===================== -->
+  <section class="section" id="virtualizacion">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Virtualizacion vs. Contenedores</h2>
+      <p class="section-desc">
+        Comprende las diferencias arquitectonicas entre hipervisores y contenedores,
+        y por que los contenedores revolucionaron la forma de desplegar software.
+      </p>
+    </div>
+
+    <!-- Toggle de comparacion -->
+    <div class="compare-toggle">
+      <button class="compare-btn active" data-view="matriz">Vista Matriz</button>
+      <button class="compare-btn" data-view="tarjetas">Vista Tarjetas</button>
+    </div>
+
+    <!-- Vista Matriz -->
+    <div class="compare-matrix" id="matrizView">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th class="col-feature">Caracteristica</th>
+            <th class="col-hypervisor">
+              <span class="col-badge hypervisor">Hipervisor</span>
+              <span class="col-sub">Tipo 1 / Tipo 2</span>
+            </th>
+            <th class="col-container">
+              <span class="col-badge container">Contenedor</span>
+              <span class="col-sub">Docker / Namespaces</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">Aislamiento</td>
+            <td><span class="cell-full">Maquina Virtual completa</span></td>
+            <td><span class="cell-partial">Aislamiento por Namespace</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Sistema Operativo</td>
+            <td><span class="cell-full">SO invitado dedicado</span></td>
+            <td><span class="cell-partial">Comparte SO con el host</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Uso de Recursos</td>
+            <td><span class="cell-warn">Alto (GB de RAM reservado)</span></td>
+            <td><span class="cell-good">Bajo (MB, compartido)</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Tiempo de Arranque</td>
+            <td><span class="cell-warn">Minutos</span></td>
+            <td><span class="cell-good">Milisegundos / Segundos</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Portabilidad</td>
+            <td><span class="cell-warn">Baja (formato de imagen)</span></td>
+            <td><span class="cell-good">Alta (imagen estandar)</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Orquestacion</td>
+            <td><span class="cell-warn">Compleja (vSphere, Hyper-V)</span></td>
+            <td><span class="cell-good">Simple (Docker Compose, K8s)</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Escalabilidad</td>
+            <td><span class="cell-warn">Horizontal limitada</span></td>
+            <td><span class="cell-good">Horizontal masiva</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Ejemplo Tecnologia</td>
+            <td><span class="cell-full">VMware, VirtualBox, Hyper-V</span></td>
+            <td><span class="cell-partial">Docker, Podman, LXC</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Vista Tarjetas -->
+    <div class="compare-cards hidden" id="tarjetasView">
+      <div class="arch-cards-row">
+        <!-- Hipervisor Tipo 1 -->
+        <div class="arch-card expandable">
+          <div class="arch-card-header" data-toggle="hyp1">
+            <span class="arch-card-icon">&#9783;</span>
+            <div>
+              <h4 class="arch-card-title">Hipervisor Tipo 1</h4>
+              <span class="arch-card-sub">Bare-metal</span>
+            </div>
+            <span class="expand-arrow">&#9662;</span>
+          </div>
+          <div class="arch-card-body" id="hyp1">
+            <div class="arch-diagram">
+              <div class="diagram-layer hw">Hardware Fisico</div>
+              <div class="diagram-arrow">&darr;</div>
+              <div class="diagram-layer hyp">Hipervisor (VMware ESXi, Xen, KVM)</div>
+              <div class="diagram-arrow">&darr;</div>
+              <div class="diagram-vm-row">
+                <div class="diagram-vm">VM 1<br><small>Linux + App</small></div>
+                <div class="diagram-vm">VM 2<br><small>Windows + App</small></div>
+                <div class="diagram-vm">VM 3<br><small>Linux + DB</small></div>
+              </div>
+            </div>
+            <p class="arch-description">
+              Se instala directamente sobre el hardware. Ofrece el mejor rendimiento
+              porque no hay capa de SO intermedia. Usado en servidores de produccion
+              enterprise con VMware ESXi, Citrix XenServer o KVM.
+            </p>
+            <div class="arch-pros-cons">
+              <div class="pros"><strong>+</strong> Alto rendimiento, aislamiento completo</div>
+              <div class="cons"><strong>&#8722;</strong> Requiere hardware dedicado, licencias costosas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hipervisor Tipo 2 -->
+        <div class="arch-card expandable">
+          <div class="arch-card-header" data-toggle="hyp2">
+            <span class="arch-card-icon">&#9783;</span>
+            <div>
+              <h4 class="arch-card-title">Hipervisor Tipo 2</h4>
+              <span class="arch-card-sub">Hosted</span>
+            </div>
+            <span class="expand-arrow">&#9662;</span>
+          </div>
+          <div class="arch-card-body" id="hyp2">
+            <div class="arch-diagram">
+              <div class="diagram-layer hw">Hardware Fisico</div>
+              <div class="diagram-arrow">&darr;</div>
+              <div class="diagram-layer os">Sistema Operativo (Windows/Linux/Mac)</div>
+              <div class="diagram-arrow">&darr;</div>
+              <div class="diagram-layer hyp">Hipervisor (VirtualBox, VMware Workstation)</div>
+              <div class="diagram-arrow">&darr;</div>
+              <div class="diagram-vm-row">
+                <div class="diagram-vm">VM 1<br><small>Ubuntu Server</small></div>
+                <div class="diagram-vm">VM 2<br><small>CentOS</small></div>
+              </div>
+            </div>
+            <p class="arch-description">
+              Funciona como una aplicacion sobre un SO existente. Ideal para
+              desarrollo local y pruebas. VirtualBox y VMware Workstation son
+              los ejemplos mas comunes. Hay una capa extra de overhead.
+            </p>
+            <div class="arch-pros-cons">
+              <div class="pros"><strong>+</strong> Facil instalacion, gratuito (VirtualBox)</div>
+              <div class="cons"><strong>&#8722;</strong> Menor rendimiento, depende del SO host</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenedores Docker -->
+        <div class="arch-card expandable">
+          <div class="arch-card-header" data-toggle="docker">
+            <span class="arch-card-icon">&#9881;</span>
+            <div>
+              <h4 class="arch-card-title">Contenedores Docker</h4>
+              <span class="arch-card-sub">Namespaces &amp; Cgroups</span>
+            </div>
+            <span class="expand-arrow">&#9662;</span>
+          </div>
+          <div class="arch-card-body" id="docker">
+            <div class="arch-diagram">
+              <div class="diagram-layer hw">Hardware Fisico</div>
+              <div class="diagram-arrow">&darr;</div>
+              <div class="diagram-layer os">Sistema Operativo (Kernel compartido)</div>
+              <div class="diagram-arrow">&darr;</div>
+              <div class="diagram-layer hyp" style="background:var(--color-container);">Docker Engine / Container Runtime</div>
+              <div class="diagram-arrow">&darr;</div>
+              <div class="diagram-vm-row">
+                <div class="diagram-vm container">Container A<br><small>Nginx + App</small></div>
+                <div class="diagram-vm container">Container B<br><small>Node.js</small></div>
+                <div class="diagram-vm container">Container C<br><small>MySQL</small></div>
+                <div class="diagram-vm container">Container D<br><small>Redis</small></div>
+              </div>
+            </div>
+            <p class="arch-description">
+              Comparten el kernel del SO host. Usan Linux Namespaces para
+              aislamiento y Cgroups para limitar recursos. Son ligeros,
+              arrancan en segundos y se pueden orquestar con Docker Compose o Kubernetes.
+            </p>
+            <div class="arch-pros-cons">
+              <div class="pros"><strong>+</strong> Ultra-rapido, eficiente, portable, escalable</div>
+              <div class="cons"><strong>&#8722;</strong> Menor aislamiento que VM, Linux-centrico</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagrama de eficiencia de recursos -->
+    <div class="efficiency-section">
+      <h3 class="efficiency-title">Eficiencia de Recursos Comparada</h3>
+      <div class="efficiency-bars">
+        <div class="eff-bar-group">
+          <span class="eff-label">Maquina Virtual</span>
+          <div class="eff-bar-track">
+            <div class="eff-bar-fill vm-fill" data-width="85">1.5 GB RAM / 20 GB Disco</div>
+          </div>
+        </div>
+        <div class="eff-bar-group">
+          <span class="eff-label">Contenedor</span>
+          <div class="eff-bar-track">
+            <div class="eff-bar-fill container-fill" data-width="25">15 MB RAM / 50 MB Disco</div>
+          </div>
+        </div>
+        <div class="eff-bar-group">
+          <span class="eff-label">Tiempo Arranque VM</span>
+          <div class="eff-bar-track">
+            <div class="eff-bar-fill vm-fill" data-width="75">60-120 segundos</div>
+          </div>
+        </div>
+        <div class="eff-bar-group">
+          <span class="eff-label">Tiempo Arranque Contenedor</span>
+          <div class="eff-bar-track">
+            <div class="eff-bar-fill container-fill" data-width="8">0.5-2 segundos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MODULO 2: ARQUITECTURA ENTORNO LOCAL ===================== -->
+  <section class="section section-alt" id="entorno-local">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Arquitectura del Entorno de Desarrollo Local</h2>
+      <p class="section-desc">
+        Configuracion modular de servidores independientes en Windows,
+        con rutas de disco, variables de entorno y estructura de directorios.
+      </p>
+    </div>
+
+    <!-- Arbol de directorios interactivo -->
+    <div class="local-env-container">
+      <div class="file-explorer">
+        <div class="explorer-header">
+          <span class="explorer-title">&#128193; Estructura de Directorios</span>
+          <span class="explorer-path">C:\</span>
+        </div>
+        <div class="explorer-tree" id="explorerTree">
+          <div class="tree-item root" data-id="c-drive">
+            <span class="tree-toggle">&#9662;</span>
+            <span class="tree-icon folder">&#128193;</span>
+            <span class="tree-name">C:\</span>
+          </div>
+          <div class="tree-children" data-parent="c-drive">
+            <div class="tree-item" data-id="dev">
+              <span class="tree-toggle">&#9662;</span>
+              <span class="tree-icon folder">&#128193;</span>
+              <span class="tree-name">DevTools\</span>
+            </div>
+            <div class="tree-children" data-parent="dev">
+              <div class="tree-item" data-id="java">
+                <span class="tree-toggle">&#9662;</span>
+                <span class="tree-icon folder">&#128193;</span>
+                <span class="tree-name">Java\</span>
+              </div>
+              <div class="tree-children" data-parent="java">
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">jdk-21\</span>
+                  <span class="tree-badge env-var">JAVA_HOME</span>
+                </div>
+              </div>
+              <div class="tree-item" data-id="tomcat">
+                <span class="tree-toggle">&#9662;</span>
+                <span class="tree-icon folder">&#128193;</span>
+                <span class="tree-name">Tomcat\</span>
+              </div>
+              <div class="tree-children" data-parent="tomcat">
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">apache-tomcat-10.1\</span>
+                </div>
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">webapps\</span>
+                  <span class="tree-badge info">Deploy</span>
+                </div>
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">conf\server.xml</span>
+                  <span class="tree-badge port">:8080</span>
+                </div>
+              </div>
+              <div class="tree-item" data-id="mysql">
+                <span class="tree-toggle">&#9662;</span>
+                <span class="tree-icon folder">&#128193;</span>
+                <span class="tree-name">MySQL\</span>
+              </div>
+              <div class="tree-children" data-parent="mysql">
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">mysql-8.0\</span>
+                </div>
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">data\</span>
+                  <span class="tree-badge info">DB Files</span>
+                </div>
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">my.ini</span>
+                  <span class="tree-badge port">:3306</span>
+                </div>
+              </div>
+              <div class="tree-item" data-id="pg">
+                <span class="tree-toggle">&#9662;</span>
+                <span class="tree-icon folder">&#128193;</span>
+                <span class="tree-name">PostgreSQL\</span>
+              </div>
+              <div class="tree-children" data-parent="pg">
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">pgsql-15\</span>
+                </div>
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">data\</span>
+                  <span class="tree-badge info">DB Files</span>
+                </div>
+                <div class="tree-item file">
+                  <span class="tree-icon file-icon">&#128196;</span>
+                  <span class="tree-name">postgresql.conf</span>
+                  <span class="tree-badge port">:5432</span>
+                </div>
+              </div>
+            </div>
+            <div class="tree-item" data-id="projects">
+              <span class="tree-toggle">&#9662;</span>
+              <span class="tree-icon folder">&#128193;</span>
+              <span class="tree-name">Projects\</span>
+            </div>
+            <div class="tree-children" data-parent="projects">
+              <div class="tree-item file">
+                <span class="tree-icon file-icon">&#128196;</span>
+                <span class="tree-name">mi-app-web\</span>
+                <span class="tree-badge info">src\</span>
+              </div>
+              <div class="tree-item file">
+                <span class="tree-icon file-icon">&#128196;</span>
+                <span class="tree-name">api-rest\</span>
+                <span class="tree-badge info">src\</span>
+              </div>
+            </div>
+            <div class="tree-item" data-id="docker-dir">
+              <span class="tree-toggle">&#9662;</span>
+              <span class="tree-icon folder">&#128193;</span>
+              <span class="tree-name">Docker\</span>
+            </div>
+            <div class="tree-children" data-parent="docker-dir">
+              <div class="tree-item file">
+                <span class="tree-icon file-icon">&#128196;</span>
+                <span class="tree-name">docker-compose.yml</span>
+                <span class="tree-badge env-var">ORCH</span>
+              </div>
+              <div class="tree-item file">
+                <span class="tree-icon file-icon">&#128196;</span>
+                <span class="tree-name">Dockerfile</span>
+              </div>
+              <div class="tree-item file">
+                <span class="tree-icon file-icon">&#128196;</span>
+                <span class="tree-name">.docker\</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de Variables de Entorno -->
+      <div class="env-variables-panel">
+        <h3 class="env-panel-title">Variables de Entorno del Sistema</h3>
+        <div class="env-var-list" id="envVarList">
+          <div class="env-var-item">
+            <code class="env-key">JAVA_HOME</code>
+            <span class="env-arrow">=</span>
+            <code class="env-value">C:\DevTools\Java\jdk-21</code>
+          </div>
+          <div class="env-var-item">
+            <code class="env-key">CATALINA_HOME</code>
+            <span class="env-arrow">=</span>
+            <code class="env-value">C:\DevTools\Tomcat\apache-tomcat-10.1</code>
+          </div>
+          <div class="env-var-item">
+            <code class="env-key">MYSQL_HOME</code>
+            <span class="env-arrow">=</span>
+            <code class="env-value">C:\DevTools\MySQL\mysql-8.0</code>
+          </div>
+          <div class="env-var-item">
+            <code class="env-key">PGDATA</code>
+            <span class="env-arrow">=</span>
+            <code class="env-value">C:\DevTools\PostgreSQL\pgsql-15\data</code>
+          </div>
+          <div class="env-var-item">
+            <code class="env-key">PATH</code>
+            <span class="env-arrow">+=</span>
+            <code class="env-value">%JAVA_HOME%\bin;%CATALINA_HOME%\bin;%MYSQL_HOME%\bin</code>
+          </div>
+          <div class="env-var-item">
+            <code class="env-key">DOCKER_HOST</code>
+            <span class="env-arrow">=</span>
+            <code class="env-value">unix:///var/run/docker.sock</code>
+          </div>
+        </div>
+
+        <!-- Diagrama de conexiones -->
+        <div class="connections-diagram">
+          <h4 class="conn-title">Flujo de Conexiones Locales</h4>
+          <div class="conn-flow">
+            <div class="conn-node browser">Navegador<br><small>:80 / :8080</small></div>
+            <div class="conn-arrow">&rarr;</div>
+            <div class="conn-node tomcat">Tomcat<br><small>:8080</small></div>
+            <div class="conn-arrow">&rarr;</div>
+            <div class="conn-node db">MySQL<br><small>:3306</small></div>
+          </div>
+          <div class="conn-flow">
+            <div class="conn-node browser">Navegador<br><small>:80</small></div>
+            <div class="conn-arrow">&rarr;</div>
+            <div class="conn-node nginx">Nginx<br><small>:80</small></div>
+            <div class="conn-arrow">&rarr;</div>
+            <div class="conn-node pg-db">PostgreSQL<br><small>:5432</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MODULO 3: PIPELINE CI/CD ===================== -->
+  <section class="section" id="pipeline">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Pipeline de Despliegue en la Nube</h2>
+      <p class="section-desc">
+        Flujo completo desde el repositorio local hasta el despliegue automatico
+        en la nube con integracion continua y entrega continua (CI/CD).
+      </p>
+    </div>
+
+    <!-- Pipeline interactivo -->
+    <div class="pipeline-container">
+      <div class="pipeline-stages" id="pipelineStages">
+        <!-- Etapa 1: Desarrollo Local -->
+        <div class="pipeline-stage" data-stage="1">
+          <div class="stage-connector" id="connector1"></div>
+          <div class="stage-node">
+            <div class="stage-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <h4 class="stage-name">Desarrollo Local</h4>
+            <p class="stage-desc">IDE + Git en maquina local</p>
+            <div class="stage-details">
+              <code>git add .</code>
+              <code>git commit -m "feat: nueva funcionalidad"</code>
+              <code>git push origin main</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Etapa 2: Repositorio Remoto -->
+        <div class="pipeline-stage" data-stage="2">
+          <div class="stage-connector" id="connector2"></div>
+          <div class="stage-node">
+            <div class="stage-icon github-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </div>
+            <h4 class="stage-name">GitHub / GitLab</h4>
+            <p class="stage-desc">Repositorio remoto + Webhooks</p>
+            <div class="stage-details">
+              <code>Branch: main</code>
+              <code>Pull Request → Review</code>
+              <code>Webhook → CI Server</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Etapa 3: CI/CD Server -->
+        <div class="pipeline-stage" data-stage="3">
+          <div class="stage-connector" id="connector3"></div>
+          <div class="stage-node">
+            <div class="stage-icon ci-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h4 class="stage-name">CI/CD Server</h4>
+            <p class="stage-desc">GitHub Actions / Jenkins</p>
+            <div class="stage-details">
+              <code>npm install</code>
+              <code>npm run test</code>
+              <code>npm run build</code>
+              <code>Deploy artifacts</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Etapa 4: Build & Test -->
+        <div class="pipeline-stage" data-stage="4">
+          <div class="stage-connector" id="connector4"></div>
+          <div class="stage-node">
+            <div class="stage-icon build-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+              </svg>
+            </div>
+            <h4 class="stage-name">Build &amp; Test</h4>
+            <p class="stage-desc">Compilacion y pruebas automatizadas</p>
+            <div class="stage-details">
+              <code>Unit Tests ✓</code>
+              <code>Integration Tests ✓</code>
+              <code>Linter ✓</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Etapa 5: Deploy Cloud -->
+        <div class="pipeline-stage" data-stage="5">
+          <div class="stage-node">
+            <div class="stage-icon cloud-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+              </svg>
+            </div>
+            <h4 class="stage-name">Cloud Deploy</h4>
+            <p class="stage-desc">Netlify / Vercel / AWS</p>
+            <div class="stage-details">
+              <code>Deploy automatico</code>
+              <code>Preview URL → Produccion</code>
+              <code>SSL + CDN habilitado</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boton para simular el pipeline -->
+      <div class="pipeline-controls">
+        <button class="btn-pipeline" id="runPipeline">
+          <span class="btn-icon">&#9654;</span>
+          Simular Pipeline Completo
+        </button>
+        <button class="btn-pipeline btn-reset" id="resetPipeline">
+          <span class="btn-icon">&#8634;</span>
+          Reiniciar
+        </button>
+      </div>
+      <div class="pipeline-log" id="pipelineLog"></div>
+    </div>
+  </section>
+
+  <!-- ===================== MODULO 4: CONSOLA INTERACTIVA ===================== -->
+  <section class="section section-alt" id="consola">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Consola de Pruebas y Logs en Vivo</h2>
+      <p class="section-desc">
+        Simula el arranque de servicios, ejecuta comandos y observa los registros
+        (logs) de sistema en tiempo real.
+      </p>
+    </div>
+
+    <div class="console-container">
+      <div class="console-window">
+        <div class="console-header">
+          <div class="console-dots">
+            <span class="c-dot red"></span>
+            <span class="c-dot yellow"></span>
+            <span class="c-dot green"></span>
+          </div>
+          <span class="console-title">terminal@infratech:~</span>
+        </div>
+        <div class="console-body" id="consoleBody">
+          <div class="console-welcome">
+            <pre class="ascii-art">
+ ____  _   _ _____ ____   ___  __  __ ___ _   _    _    _
+|  _ \| | | |_   _|  _ \ / _ \|  \/  |_ _| \ | |  / \  | |
+| |_) | | | | | | | |_) | | | | |\/| || ||  \| | / _ \ | |
+|  __/| |_| | | | |  __/| |_| | |  | || || |\  |/ ___ \| |___
+|_|    \___/  |_| |_|    \___/|_|  |_|___|_| \_/_/   \_\_____|
+            </pre>
+            <p class="console-msg">Bienvenido a la consola de infraestructura.</p>
+            <p class="console-msg">Escribe <code>help</code> para ver los comandos disponibles.</p>
+          </div>
+          <div class="console-output" id="consoleOutput"></div>
+        </div>
+        <div class="console-input-area">
+          <span class="prompt-symbol">root@infratech:~$</span>
+          <input type="text" class="console-input" id="consoleInput"
+                 placeholder="Escribe un comando..." autocomplete="off" spellcheck="false">
+          <button class="console-send" id="consoleSend">&#9654;</button>
+        </div>
+      </div>
+
+      <!-- Panel de servicios rapidos -->
+      <div class="quick-services">
+        <h3 class="quick-title">Acciones Rapidas</h3>
+        <div class="quick-buttons">
+          <button class="quick-btn" data-cmd="start apache">Iniciar Apache</button>
+          <button class="quick-btn" data-cmd="start mysql">Iniciar MySQL</button>
+          <button class="quick-btn" data-cmd="start postgres">Iniciar PostgreSQL</button>
+          <button class="quick-btn" data-cmd="start nginx">Iniciar Nginx</button>
+          <button class="quick-btn" data-cmd="status">Ver Estado</button>
+          <button class="quick-btn" data-cmd="docker ps">Docker PS</button>
+          <button class="quick-btn" data-cmd="docker-compose up">Compose Up</button>
+          <button class="quick-btn danger" data-cmd="clear">Limpiar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="brand-icon">&#9881;</span>
+        <span>InfraTech</span>
+      </div>
+      <p class="footer-text">
+        Plataforma Educativa de Infraestructura, Virtualizacion, Contenedores y DevOps.
+      </p>
+      <div class="footer-links">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#virtualizacion">Virtualizacion</a>
+        <a href="#entorno-local">Entorno Local</a>
+        <a href="#pipeline">Pipeline CI/CD</a>
+        <a href="#consola">Consola</a>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 InfraTech. Proyecto Educativo.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de informacion -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
